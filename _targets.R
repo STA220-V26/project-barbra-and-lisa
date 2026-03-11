@@ -49,18 +49,18 @@ list(
   #unzip the file
   tar_target(cvs_files, zip::unzip(zipdata)),
 
-  tar_target(
-    patients_clean,
-    {
-      patients <- setDT(patients_raw)
-      setkey(patients, id)
+tar_target(
+  patients_clean,
+  {
+    patients <- setDT(patients_raw)
+    setkey(patients, id)
 
       patients <- janitor::remove_empty(patients, quiet = TRUE)
       patients <- janitor::remove_constant(patients, quiet = TRUE)
 
-      patients
-    }
-  ),
+    patients
+  }
+),
   #dynamically read all files found in data-fixed
   #I removed the fs::dir_map line because it was causing the error
   tar_map(
