@@ -4,8 +4,23 @@
 #   https://books.ropensci.org/targets/walkthrough.html#inspect-the-pipeline
 
 # Load packages required to define the pipeline:
-library(targets)
-# library(tarchetypes) # Load other packages as needed.
+pkgs <- c(
+  "janitor", # data cleaning
+  "labelled", # labeling data
+  "pointblank", # data validation and exploration
+  "rvest", # get data from web pages
+  "tidyverse", # Data management
+  "data.table", # fast data management
+  "fs", # to work wit hthe file system
+  "zip" # manipulate zip files
+  "targets"
+  "tarchetypes"
+  "qs2"
+)
+
+install.packages(setdiff(pkgs, row.names(installed.packages())))
+invisible(lapply(pkgs, library, character.only = TRUE))
+
 
 # Set target options:
 tar_option_set(
@@ -48,8 +63,37 @@ tar_option_set(
 tar_source()
 # tar_source("other_functions.R") # Source other scripts as needed.
 
+# We first download the data health care data of interest
+if (!fs::file_exists("data.zip")) {
+  message("Downloading data.zip from GitHub")
+  curl::curl_download(
+    "https://github.com/STA220/cs/raw/refs/heads/main/data.zip",
+    "data.zip",
+    quiet = FALSE
+  )
+}
+
 # Replace the target list below with your own:
 list(
+  #define the zip file path
+  tar_target(zipdata, "data.zip", format = "file"),
+
+  #unzip the file
+  tar_target(cvs_files, zip::unzip(zipdata)),
+
+  #dynamically read all files found in data-fixed
+  #I removed the fs::dir_map line because it was causing the error
+  tar_map(
+   values = tibble::tibble(path = dir("data-fixed", full.names = TRUE)) |> #looks inside data-fixed and gets the full path for every file inside
+     dplyr::mutate(name = tools::file_path_sans_ext(basename(path))), #creates a clean name column by stripping away the folder path and the file extension
+   tar_target(dt, fread(path)), #for every row in the table above, tar_map will generate a target named dt
+   names = name, #tells tar_map how to name the resulting targets in the pipeline
+   descriptions = NULL
+  )
+ 
+  
+  
+  
   tar_target(
     name = data, #the name which you reference to this command with
     command = tibble(x = rnorm(100), y = rnorm(100))
