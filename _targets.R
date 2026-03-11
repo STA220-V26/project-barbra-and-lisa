@@ -3,6 +3,9 @@
 # Then follow the manual to check and run the pipeline:
 #   https://books.ropensci.org/targets/walkthrough.html#inspect-the-pipeline
 
+library(targets)
+library(tarchetypes)
+
 # Load packages required to define the pipeline:
 pkgs <- c(
   "janitor", # data cleaning
@@ -12,9 +15,7 @@ pkgs <- c(
   "tidyverse", # Data management
   "data.table", # fast data management
   "fs", # to work wit hthe file system
-  "zip" # manipulate zip files
-  "targets"
-  "tarchetypes"
+  "zip", # manipulate zip files
   "qs2"
 )
 
@@ -89,7 +90,7 @@ list(
    tar_target(dt, fread(path)), #for every row in the table above, tar_map will generate a target named dt
    names = name, #tells tar_map how to name the resulting targets in the pipeline
    descriptions = NULL
-  )
+  ),
  
   
   
