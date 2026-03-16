@@ -1,7 +1,5 @@
 library(targets)
 library(tarchetypes)
-library(ggplot2)
-library(gtsummary)
 
 # Load packages required to define the pipeline:
 pkgs <- c(
