@@ -1,6 +1,7 @@
 library(targets)
 library(tarchetypes)
 library(gtsummary)
+library(gt)
 
 # Load packages required to define the pipeline:
 pkgs <- c(

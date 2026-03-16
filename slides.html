@@ -6,12 +6,12 @@
 <script src="report_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="report_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="report_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="report_files/libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<link href="report_files/libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.8.27">
 
   <meta name="author" content="Barbra and Lisa">
   <meta name="dcterms.date" content="2026-03-16">
-  <title>Barbra and Lisa’s magical statistics adventure (working title)</title>
+  <title>Barbra and Lisa’s Magical Statistics Adventure (working title)</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -30,7 +30,8 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="report_files/libs/revealjs/dist/theme/quarto-534cd8e3a96973385dffff3f4709048d.css">
+  <link rel="stylesheet" href="report_files/libs/revealjs/dist/theme/quarto-6ae29d241dba1d02babb97ce1fbe8bdd.css">
+  <link rel="stylesheet" href="styles.css">
   <link href="report_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="report_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="report_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -46,6 +47,7 @@
     }
     .reveal .slide:not(.center) {
       height: 100%;
+      overflow-y: auto;
     }
     .reveal .slide.scrollable {
       overflow-y: auto;
@@ -123,12 +125,12 @@
     }
   </style>
 </head>
-<body class="quarto-light">
+<body class="quarto-dark">
   <div class="reveal">
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Barbra and Lisa’s magical statistics adventure (working title)</h1>
+  <h1 class="title">Barbra and Lisa’s Magical Statistics Adventure (working title)</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -140,9 +142,13 @@ Barbra and Lisa
 
   <p class="date">2026-03-16</p>
 </section>
-<section id="here-is-my-beautiful-data" class="title-slide slide level1 center">
-<h1>Here is my beautiful data!</h1>
-<p>library(targets) tar_read(expense_age_plot)</p>
+<section class="slide level2">
+
+<p>#| label: setup #| include: false library(targets) library(gtsummary) library(ggplot2)</p>
+<p>#| label: summary-table tar_read(pretty_summary)</p>
+<p>#| label: age-plot #| fig-width: 10 #| fig-height: 6 tar_read(expense_age_plot)</p>
+<p>#| label: scatter-plot #| fig-width: 10 #| fig-height: 6 tar_read(combined_trend_plot)</p>
+<p>#| label: regression-output # Since regression_results is a raw ‘lm’ object, # we use tbl_regression to make it look pretty like the rest! library(gtsummary) tar_read(regression_results) |&gt; tbl_regression()</p>
 
 </section>
     </div>
@@ -181,7 +187,7 @@ Barbra and Lisa
 'autoAnimateUnmatched': true,
 'jumpToSlide': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'smaller': false,
+'smaller': true,
  
         // Display controls in the bottom right corner
         controls: false,
@@ -201,7 +207,7 @@ Barbra and Lisa
         progress: true,
 
         // Display the page number of the current slide
-        slideNumber: false,
+        slideNumber: 'c/t',
 
         // 'all', 'print', or 'speaker'
         showSlideNumber: 'all',
@@ -306,7 +312,7 @@ Barbra and Lisa
         previewLinks: false,
 
         // Transition style (none/fade/slide/convex/concave/zoom)
-        transition: 'none',
+        transition: 'fade',
 
         // Transition speed (default/fast/slow)
         transitionSpeed: 'default',

@@ -1,19 +1,46 @@
-
 ---
-title: Barbra and Lisa's magical statistics adventure (working title)
+title: Barbra and Lisa's Magical Statistics Adventure (working title)
 author: Barbra and Lisa
 date: today
 format: 
   typst: default
   docx: default
-  revealjs: 
+  revealjs:
+    theme: blood
+    transition: fade
+    slide-number: true
+    css: styles.css
+    smaller: true
+    scrollable: true
+    incremental: false
     output-file: slides.html
-
 ---
-
-# Here is my beautiful data!
-
-
 ```{r}
+#| label: setup
+#| include: false
 library(targets)
+library(gtsummary)
+library(ggplot2)
+
+
+#| label: summary-table
+tar_read(pretty_summary)
+
+#| label: age-plot
+#| fig-width: 10
+#| fig-height: 6
 tar_read(expense_age_plot)
+
+
+#| label: scatter-plot
+#| fig-width: 10
+#| fig-height: 6
+tar_read(combined_trend_plot)
+
+
+#| label: regression-output
+# Since regression_results is a raw 'lm' object, 
+# we use tbl_regression to make it look pretty like the rest!
+library(gtsummary)
+tar_read(regression_results) |> 
+  tbl_regression()
