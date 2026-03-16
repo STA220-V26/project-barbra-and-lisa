@@ -1,6 +1,5 @@
 library(targets)
 library(tarchetypes)
-
 # Load packages required to define the pipeline:
 pkgs <- c(
   "janitor",
