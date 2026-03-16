@@ -18,38 +18,52 @@ format:
     output-file: slides.html
 ---
 
+
+
 ```{r}
 #| warning: false
 #| message: false
+#| echo: false
 library(targets)
 library(gtsummary)
 library(gt)
 ```
 
+## 2
+
 ```{r}
 #| label: summary-table
+#| echo: false
 tar_read(pretty_summary)
 ```
 
+## 3
 
 ```{r}
 #| label: age-plot
 #| fig-width: 10
 #| fig-height: 6
+#| echo: false
 tar_read(expense_age_plot)
 ```
+
+## 4
 
 ```{r}
 #| label: scatter-plot
 #| fig-width: 10
 #| fig-height: 6
+#| echo: false
 tar_read(combined_trend_plot)
 ```
+
+## 5
 
 ```{r}
 #| label: regression-output
 # Since regression_results is a raw 'lm' object, 
 # we use tbl_regression to make it look pretty like the rest!
+#| echo: false
 library(gtsummary)
 tar_read(regression_results) |> 
   tbl_regression()

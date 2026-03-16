@@ -17,4 +17,4 @@ regression_results|stem|63f0978bf43541e4|f756c25796b3353f|0df9f9a5514d9567|-2751
 combined_trend_plot|stem|1944be07fee49b70|09772eaf814c44e6|0df9f9a5514d9567|-80264915||t20528.5799832709s|s511416b|511416|qs|local|vector|||0.037|Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0. ℹ Please use `linewidth` instead.|
 pretty_summary|stem|2a657e2796d1d3e7|c23632e7061b94b6|0df9f9a5514d9567|-593815681||t20528.5799957793s|s317152b|317152|qs|local|vector|||1.067||
 pkgs|object|50858a145b17b2d1
-report|stem|5c56c47c48c2250f|56e98fdb6fa58c3f|77c82779c9ed19d4|787668912|report_files*report.docx*report.pdf*slides.html*report.qmd|t20528.6140637961s|s8402575b|8402575|file|local|vector|||8.291||
+report|stem|09f7d41265d4b186|56e98fdb6fa58c3f|77c82779c9ed19d4|787668912|report_files*report.docx*report.pdf*slides.html*report.qmd|t20528.6211133573s|s8386343b|8386343|file|local|vector|||8.582||
