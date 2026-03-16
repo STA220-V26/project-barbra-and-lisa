@@ -321,8 +321,6 @@ list(
     }
   ),
 
-  tar_load(analysis_dataset),
-
   #regression
   tar_target(
     regression_results,

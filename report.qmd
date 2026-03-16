@@ -2,6 +2,8 @@
 title: Barbra and Lisa's Magical Statistics Adventure (working title)
 author: Barbra and Lisa
 date: today
+execute:
+  fig-device: ragg_png  # This tells R to use a modern, Mac-friendly engine
 format: 
   typst: default
   docx: default
@@ -17,8 +19,16 @@ format:
 ---
 
 ```{r}
+#| warning: false
+#| message: false
+library(targets)
+library(gtsummary)
+library(gt)
+```
+
+```{r}
 #| label: summary-table
-print(tar_read(pretty_summary))
+tar_read(pretty_summary)
 ```
 
 
@@ -26,14 +36,14 @@ print(tar_read(pretty_summary))
 #| label: age-plot
 #| fig-width: 10
 #| fig-height: 6
-print(tar_read(expense_age_plot))
+tar_read(expense_age_plot)
 ```
 
 ```{r}
 #| label: scatter-plot
 #| fig-width: 10
 #| fig-height: 6
-print(tar_read(combined_trend_plot))
+tar_read(combined_trend_plot)
 ```
 
 ```{r}
