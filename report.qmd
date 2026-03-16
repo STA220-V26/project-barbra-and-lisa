@@ -1,0 +1,19 @@
+
+---
+title: Barbra and Lisa's magical statistics adventure (working title)
+author: Barbra and Lisa
+date: today
+format: 
+  typst: default
+  docx: default
+  revealjs: 
+    output-file: slides.html
+
+---
+
+# Here is my beautiful data!
+
+
+```{r}
+library(targets)
+tar_read(expense_age_plot)

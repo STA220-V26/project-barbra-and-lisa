@@ -1,5 +1,6 @@
 library(targets)
 library(tarchetypes)
+library(gtsummary)
 
 # Load packages required to define the pipeline:
 pkgs <- c(
@@ -376,7 +377,12 @@ list(
         color = "Gender",
         fill = "Gender"
       )
-  )
+  ),
+
+  #make the presentation
+  tar_quarto(report, "report.qmd")
+
+
 
 )
 
