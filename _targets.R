@@ -1,5 +1,7 @@
 library(targets)
 library(tarchetypes)
+library(ggplot2)
+library(gtsummary)
 
 # Load packages required to define the pipeline:
 pkgs <- c(
@@ -317,6 +319,66 @@ list(
 
       analysis_dataset
     }
+  ),
+
+  tar_load(analysis_dataset),
+
+  #regression
+  tar_target(
+    regression_results,
+    lm(healthcare_expenses ~ age + gender + age*n_encounters, data = analysis_dataset)
+  ),
+
+  #histogram of aves
+  tar_target(
+    expense_age_plot,
+    ggplot(analysis_dataset, aes(x = age_group, y = healthcare_expenses)) +
+      # Use geom_col to sum up expenses per age, or geom_point for a scatter plot
+      geom_col(fill = "steelblue") + 
+      # This is the "magic" that makes two separate plots
+      facet_wrap(~gender) + 
+      labs(
+        title = "Healthcare Expenses by Age and Gender",
+        x = "Age",
+        y = "Total Healthcare Expenses"
+      ) +
+      theme_minimal()
+  ),
+
+  #descriptive statistics (table 1 ish)
+  tar_target(
+  pretty_summary,
+  analysis_dataset %>%
+    select(age, gender, n_encounters, healthcare_expenses) %>%
+    tbl_summary(by = gender) %>%
+    add_p() %>%      # Adds p-values to see if groups differ
+    add_overall()    # Adds the total column
+  ),
+
+
+  #scatterplot of healthcare encounters and expenses
+  tar_target(
+    combined_trend_plot,
+    ggplot(analysis_dataset, aes(x = n_encounters, y = healthcare_expenses)) +
+      # 1. The Points (colored by gender)
+      geom_point(aes(color = gender), alpha = 0.3) +
+      # 2. The Gender-Specific Lines
+      # Mapping 'color' here creates one line per gender
+      geom_smooth(aes(color = gender, fill = gender), method = "lm", se = TRUE) +
+      # 3. The Combined Line
+      # By NOT putting 'color' in aes() here, it calculates for the whole dataset
+      geom_smooth(method = "lm", color = "black", linetype = "dashed", size = 1.2) +
+      theme_minimal() +
+      scale_color_brewer(palette = "Set1") +
+      labs(
+        title = "Healthcare Expenses: Gender vs. Combined Trends",
+        subtitle = "Dashed black line represents the overall population trend",
+        x = "Number of Encounters",
+        y = "Expenses ($)",
+        color = "Gender",
+        fill = "Gender"
+      )
   )
+
 )
 
