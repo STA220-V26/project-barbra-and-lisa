@@ -381,7 +381,7 @@ list(
   ),
 
   #make the presentation
-  tar_quarto(report, "report.qmd")
+  tar_quarto(report, "report.qmd", quiet = FALSE)
 
 
 
