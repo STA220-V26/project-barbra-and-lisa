@@ -16,7 +16,31 @@ format:
     output-file: slides.html
 ---
 
+```{r}
+#| label: summary-table
+print(tar_read(pretty_summary))
+```
+
 
 ```{r}
-targets::tar_read(pretty_summary)
+#| label: age-plot
+#| fig-width: 10
+#| fig-height: 6
+print(tar_read(expense_age_plot))
+```
+
+```{r}
+#| label: scatter-plot
+#| fig-width: 10
+#| fig-height: 6
+print(tar_read(combined_trend_plot))
+```
+
+```{r}
+#| label: regression-output
+# Since regression_results is a raw 'lm' object, 
+# we use tbl_regression to make it look pretty like the rest!
+library(gtsummary)
+tar_read(regression_results) |> 
+  tbl_regression()
 ```
