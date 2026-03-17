@@ -1,9 +1,9 @@
 ---
-title: Our Magical Statistics Adventure
-author: Barbra and Lisa
+title: "Our Magical Statistics Adventure"
+author: "Barbra and Lisa"
 date: today
 execute:
-  fig-device: ragg_png  # This tells R to use a modern, Mac-friendly engine
+  fig-device: ragg_png
 format: 
   typst: default
   docx: default
@@ -18,18 +18,18 @@ format:
     output-file: slides.html
 ---
 
-## Our research questions
+## Research Question
 
-Our research topic:
+We examine how healthcare expenses are associated with patient age, gender, and healthcare utilization, measured as the number of encounters.
 
-**How do Age, Gender, and Healthcare Encounters relate to Medical Expenses?**
+Our main research question is:
 
-Our sub-topics:
+**How are healthcare expenses associated with age, gender, and healthcare utilization (number of encounters)?**
+
+We also explore three related sub-questions:
 
 -   How do healthcare expenses vary across age groups?
-
 -   Are there differences in healthcare expenses between male and female patients?
-
 -   Is the number of healthcare encounters associated with healthcare expenses across genders?
 
 ```{r}
@@ -57,7 +57,7 @@ tar_read(pretty_summary)
 
 -   Medical expenses for women are higher
 
-## Histogram of Expenses by Age and Gender
+## Barchart of Expenses by Age and Gender
 
 ```{r}
 #| label: age-plot
@@ -85,7 +85,7 @@ tar_read(combined_trend_plot)
 
 -   The increase is steeper for women than men.
 
-## Linear Regression 
+## Linear Regression
 
 ```{r}
 #| label: regression-output
@@ -97,7 +97,7 @@ tar_read(regression_results) |>
   tbl_regression()
 ```
 
-healthcare_expenses \~ age + gender + n_encounters + age\*n_encounters
+log(1 + healthcare_expenses) \~ age + gender + n_encounters
 
 -   Increasing age leads to increasing expenses
 
@@ -105,8 +105,6 @@ healthcare_expenses \~ age + gender + n_encounters + age\*n_encounters
 
 -   Increasing encounters increases expenses
 
--   Interaction term barely affects slope
-
 All are significant
 
-## Thank you! 💖
+## `Thank you! 💖`

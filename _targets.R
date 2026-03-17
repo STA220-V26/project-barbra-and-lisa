@@ -2,6 +2,7 @@ library(targets)
 library(tarchetypes)
 library(gtsummary)
 library(gt)
+library(broom)
 
 # Load packages required to define the pipeline:
 pkgs <- c(
@@ -16,7 +17,8 @@ pkgs <- c(
   "qs2",
   "lubridate",
   "curl",
-  "forcats"
+  "forcats",
+  "broom"
 )
 
 invisible(lapply(pkgs, library, character.only = TRUE))
@@ -28,7 +30,10 @@ tar_option_set(
     "tidyverse",
     "data.table",
     "lubridate",
-    "forcats"
+    "forcats",
+    "broom",
+    "gtsummary",
+    "gt"
   ),
   format = "qs"
 )
@@ -322,26 +327,64 @@ list(
   ),
 
   #regression
-  tar_target(
-    regression_results,
-    lm(healthcare_expenses ~ age + gender + age*n_encounters, data = analysis_dataset)
-  ),
+tar_target(
+  regression_results,
+  {
+    dt <- analysis_dataset[
+      !is.na(healthcare_expenses) &
+      !is.na(age) &
+      !is.na(gender) &
+      !is.na(n_encounters)
+    ]
 
-  #histogram of aves
-  tar_target(
-    expense_age_plot,
-    ggplot(analysis_dataset, aes(x = age_group, y = healthcare_expenses)) +
-      # Use geom_col to sum up expenses per age, or geom_point for a scatter plot
-      geom_col(fill = "steelblue") + 
-      # This is the "magic" that makes two separate plots
-      facet_wrap(~gender) + 
+    lm(log1p(healthcare_expenses) ~ age + gender + n_encounters, data = dt)
+  }
+),
+tar_target(
+  regression_table,
+  broom::tidy(regression_results, conf.int = TRUE)
+),
+tar_target(
+  regression_results_interaction,
+  {
+    dt <- analysis_dataset[
+      !is.na(healthcare_expenses) &
+      !is.na(age) &
+      !is.na(gender) &
+      !is.na(n_encounters)
+    ]
+
+    lm(log1p(healthcare_expenses) ~ age + gender + n_encounters + age:n_encounters, data = dt)
+  }
+),
+tar_target(
+  regression_table_interaction,
+  broom::tidy(regression_results_interaction, conf.int = TRUE)
+),
+  # bar chart of median
+tar_target(
+  expense_age_plot,
+  {
+    dt_plot <- analysis_dataset[
+      ,
+      .(
+        median_expense = median(healthcare_expenses, na.rm = TRUE)
+      ),
+      by = .(age_group, gender)
+    ]
+
+    ggplot(dt_plot, aes(x = age_group, y = median_expense, fill = gender)) +
+      geom_col(position = "dodge") +
+      scale_y_log10() +
       labs(
-        title = "Healthcare Expenses by Age and Gender",
-        x = "Age",
-        y = "Total Healthcare Expenses"
+        title = "Median Healthcare Expenses by Age Group and Gender",
+        x = "Age group",
+        y = "Median healthcare expenses (log scale)",
+        fill = "Gender"
       ) +
       theme_minimal()
-  ),
+  }
+),
 
   #descriptive statistics (table 1 ish)
   tar_target(
@@ -352,31 +395,39 @@ list(
     add_p() %>%      # Adds p-values to see if groups differ
     add_overall()    # Adds the total column
   ),
-
+tar_target(
+  table_expenses_by_age_group,
+  analysis_dataset[
+    ,
+    .(
+      n_patients = .N,
+      mean_expenses = round(mean(healthcare_expenses, na.rm = TRUE), 2),
+      median_expenses = round(median(healthcare_expenses, na.rm = TRUE), 2),
+      mean_encounters = round(mean(n_encounters, na.rm = TRUE), 1)
+    ),
+    by = age_group
+  ][order(age_group)]
+),
 
   #scatterplot of healthcare encounters and expenses
-  tar_target(
-    combined_trend_plot,
-    ggplot(analysis_dataset, aes(x = n_encounters, y = healthcare_expenses)) +
-      # 1. The Points (colored by gender)
-      geom_point(aes(color = gender), alpha = 0.3) +
-      # 2. The Gender-Specific Lines
-      # Mapping 'color' here creates one line per gender
-      geom_smooth(aes(color = gender, fill = gender), method = "lm", se = TRUE) +
-      # 3. The Combined Line
-      # By NOT putting 'color' in aes() here, it calculates for the whole dataset
-      geom_smooth(method = "lm", color = "black", linetype = "dashed", size = 1.2) +
-      theme_minimal() +
-      scale_color_brewer(palette = "Set1") +
-      labs(
-        title = "Healthcare Expenses: Gender vs. Combined Trends",
-        subtitle = "Dashed black line represents the overall population trend",
-        x = "Number of Encounters",
-        y = "Expenses ($)",
-        color = "Gender",
-        fill = "Gender"
-      )
-  ),
+tar_target(
+  combined_trend_plot,
+  ggplot(analysis_dataset, aes(x = n_encounters, y = healthcare_expenses)) +
+    geom_point(aes(color = gender), alpha = 0.3) +
+    geom_smooth(aes(color = gender, fill = gender), method = "lm", se = TRUE) +
+    geom_smooth(method = "lm", color = "black", linetype = "dashed", size = 1.2) +
+    scale_y_log10() +
+    theme_minimal() +
+    scale_color_brewer(palette = "Set1") +
+    labs(
+      title = "Healthcare Expenses: Gender vs. Combined Trends",
+      subtitle = "Dashed black line represents the overall population trend",
+      x = "Number of Encounters",
+      y = "Expenses (log scale)",
+      color = "Gender",
+      fill = "Gender"
+    )
+),
 
   #make the presentation
   tar_quarto(report, "report.qmd", quiet = FALSE)
