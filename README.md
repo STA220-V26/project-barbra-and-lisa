@@ -6,6 +6,6 @@
 
 2.  *Are there differences in healthcare expenses between male and female patients?*
 
-3.  *Is the number of healthcare encounters associated with healthcare expenses across genders? Optional extra question: Are stress-related conditions associated with marital status?*
+3.  *Is the number of healthcare encounters associated with healthcare expenses across genders?*
 
 **Datasets** : (patients.csv + encounters.csv)
