@@ -1,0 +1,24 @@
+name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
+data|stem|3afb8346555a5a85|87f5902ed953433b|2c530c1562a7fbd1|33550471||t20523.6381480523s|s1770b|1770|qs|local|vector|||0||
+cvs_files|stem|519b5ac2d701e7cc|ee8c8506388aebb9|baeb2f1360659ba2|-1424849865||t20523.6382593204s|s64b|64|qs|local|vector|||9.59||
+model|stem|4b0a3ed637acc2ba|693e4c90d947b5eb|d51a5d3e5f01a5d7|808688450||t20523.6382603799s|s139b|139|qs|local|vector|||0.02||
+csv_files|stem|08d5f59e833de599|9f7810e98d8df19c|baeb2f1360659ba2|966457852||t0s|s0b|0|file|local|vector|||10.95||
+zipdata|stem|6da312022b65668f|af7f87c830782109|2c530c1562a7fbd1|-63167595|data.zip|t20523.6381145618s|s292920697b|292920697|file|local|vector|||0||
+encounters_raw|stem|1385ba122734b8ef|6f6d8f1141eb4494|2c530c1562a7fbd1|14508181||t20529.4004671313s|s32706097b|32706097|qs|local|vector|||1.03||
+patients_raw|stem|876fd1f5080edb1e|e9c75326b2352693|2c530c1562a7fbd1|1336686124||t20529.400468804s|s613217b|613217|qs|local|vector|||0.03||
+encounters_clean|stem|0d89637c56d64a48|6e973377c55eb8cc|b61c7b211ca11c6b|2104607610||t20529.400514111s|s21597348b|21597348|qs|local|vector|||2.82||
+patients_clean|stem|860ce12ef7e8d8e5|0874c87df983e82b|a7a907db5dd5fde1|1359923953||t20529.4005155057s|s139672b|139672|qs|local|vector|||0.05||
+encounter_counts|stem|32556225ed921a6b|c668299733c1df2e|e6b282c18153d0cd|652994570||t20529.4005218192s|s26934b|26934|qs|local|vector|||0.18||
+patients_age|stem|61da1b41d6f618a1|15c07afd300e3ccd|885d6b2a558bda1e|-1391944936||t20529.4005225968s|s154257b|154257|qs|local|vector|||0.03||
+patients_age_groups|stem|487a8fff69222659|09348bd9570b958c|02742b7559841674|1714844359||t20529.4005230661s|s159198b|159198|qs|local|vector|||0.01||
+analysis_dataset|stem|2d08f3206f39d567|6ebef2bf40105571|e433dbb1db5ffc75|820221638||t20529.4005233527s|s164861b|164861|qs|local|vector|||0||
+table_expenses_by_age_group|stem|e7cd7ac9706731e3|0a4e0f4b92947de2|52b29f6b89043206|1939307027||t20529.4005254647s|s468b|468|qs|local|vector|||0||
+regression_results|stem|dba41e5c39b9739d|7905a3a691003bdf|52b29f6b89043206|-275141739||t20529.4005258686s|s570308b|570308|qs|local|vector|||0.02||
+regression_results_interaction|stem|5566b3074f294876|c6967c894516219b|52b29f6b89043206|1995908765||t20529.4005262758s|s616496b|616496|qs|local|vector|||0||
+combined_trend_plot|stem|daf0e3b9e1e889d2|7fc5a2ff9e0033e4|52b29f6b89043206|-80264915||t20529.4005283199s|s529127b|529127|qs|local|vector|||0.11|Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0. ℹ Please use `linewidth` instead.|
+pretty_summary|stem|9207ed066cc1249d|c23632e7061b94b6|52b29f6b89043206|-593815681||t20529.4005825366s|s317151b|317151|qs|local|vector|||4.64||
+regression_table|stem|37a6125dabe6cf6e|fe478246d1242bbb|5b867390f899c753|-144912685||t20529.4005830151s|s498b|498|qs|local|vector|||0.02||
+regression_table_interaction|stem|73b97ffefccf19b3|6cea2c8625542152|72b5016ee7f91e3d|1175351706||t20529.40058336s|s555b|555|qs|local|vector|||0||
+expense_age_plot|stem|76b7c059da9ba41c|caa3de047109d2be|52b29f6b89043206|856317281||t20529.4132909875s|s386715b|386715|qs|local|vector|||0.06||
+pkgs|object|10506cd9e686118d
+report|stem|6ea4a955e874b081|56e98fdb6fa58c3f|7746882651b41633|787668912|report.docx*report.pdf*report_files*slides.html*report.qmd|t20529.445712269s|s7893794b|7893794|file|local|vector|||31.11||
